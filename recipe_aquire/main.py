@@ -12,4 +12,5 @@ if __name__ == '__main__':
     for category in categories[0:]:
         if category.title not in excluded_categories:
             category_recipes = ChefKochAPI.parse_recipes(category)
+            print(category)
             DataParser.write_recipes_to_json('recipes/' + str(date.today()) + "-category-" + category.title.replace(" ", "-").replace("/", "-"), category_recipes)

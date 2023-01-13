@@ -20,9 +20,10 @@ class Category:
 
 
 class Ingredient:
-    def __init__(self, name, amount):
+    def __init__(self, name, amount, unit):
         self.name = name
         self.amount = amount
+        self.unit = unit
 
     def __str__(self):
         return json.dumps(self.__dict__, ensure_ascii=False)
@@ -126,9 +127,12 @@ class ChefKochAPI:
                         ingredients_table_body = ingredients_table.find("tbody")
                         for row in ingredients_table_body.find_all('tr'):
                             cols = row.find_all('td')
+                            amount = re.sub(' +', ' ', cols[0].text.strip().replace(u"\u00A0", " ")).split(' ')
+                            
                             recipe_ingredients.append(
                                 Ingredient(re.sub(' +', ' ', cols[1].text.strip().replace(u"\u00A0", " ")),
-                                        re.sub(' +', ' ', cols[0].text.strip().replace(u"\u00A0", " "))))
+                                        amount[0],
+                                amount[1] if len(amount) > 1 else ''))
                             
                     recipe_text = ""
                     recipe_text_element = recipe_soup.find("p", {"class": "recipe-text"})

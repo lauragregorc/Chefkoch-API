@@ -174,7 +174,7 @@ class ChefKochAPI:
                             
                     images = []
                     images_parent = recipe_soup.find("div", {"class": "ds-mb-left recipe-image"})
-                    if images_parent is not None:
+                    if images_parent is not None and images_parent.find("amp-carousel") is not None:
                         images_direct_parents = images_parent.find("amp-carousel").find_all("div", recursive=False)
                         if images_direct_parents is not None:
                             for image_direct_parent in images_direct_parents:
